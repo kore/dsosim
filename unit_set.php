@@ -17,6 +17,13 @@ class UnitSet
     protected $count;
 
     /**
+     * Initial count of units
+     * 
+     * @var int
+     */
+    protected $initialCount;
+
+    /**
      * Number of remaining health in the current attack round
      * 
      * @var int
@@ -41,6 +48,7 @@ class UnitSet
     {
         $this->type          = $type;
         $this->count         = $count;
+        $this->initialCount  = $count;
         $this->health        = $count * $type->health;
         $this->currentHealth = $this->health;
     }
