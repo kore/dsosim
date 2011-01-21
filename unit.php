@@ -89,17 +89,6 @@ abstract class Unit
     const HIGH = 3;
 
     /**
-     * Determine the next target of the current unit
-     * 
-     * @param Army $army 
-     * @return Unit
-     */
-    public function determineNextTarget( Army $army )
-    {
-        // @TODO: Implement based on $attackOrder
-    }
-
-    /**
      * Provides read access to all contained properties
      * 
      * @param string $property 
@@ -125,6 +114,44 @@ abstract class Unit
     public function __set( $property, $value )
     {
         throw new RuntimeException( "No such property: $property." );
+    }
+
+    /**
+     * Determine the next target of the current unit
+     * 
+     * @param Army $army 
+     * @return Unit
+     */
+    public function determineNextTarget( Army $army )
+    {
+        $attackOrder = $this->attackOrder;
+        $orderedSets = array_filter(
+            $army->getUnits(),
+            function ( $set )
+            {
+                return $set->currentHealth > 0;
+            }
+        );
+
+        usort(
+            $orderedSets,
+            function ( $a, $b ) use ( $attackOrder )
+            {
+                return array_search( get_class( $a->type ), $attackOrder ) - array_search( get_class( $b->type ), $attackOrder );
+            }
+        );
+
+        return reset( $orderedSets );
+    }
+
+    /**
+     * Get hit points of unit
+     * 
+     * @return float
+     */
+    public function getHitPoints()
+    {
+        return $this->minHitPoints + $this->bonusHitPoints * $this->hitProbability;
     }
 }
 

@@ -10,7 +10,23 @@ abstract class FastUnit extends Unit
      */
     public function determineNextTarget( Army $army )
     {
-        // @TODO: Implement based on $health of units in set
+        $orderedSets = array_filter(
+            $army->getUnits(),
+            function ( $set )
+            {
+                return $set->currentHealth > 0;
+            }
+        );
+
+        usort(
+            $orderedSets,
+            function ( $a, $b )
+            {
+                return $a->type->health - $b->type->health;
+            }
+        );
+
+        return reset( $orderedSets );
     }
 }
 

@@ -45,7 +45,45 @@ class Army
      */
     public function attack( Army $army )
     {
-        // @TODO: Implement
+        while ( $this->isAlive() && $army->isAlive() )
+        {
+            foreach ( $this->units as $priority => $sets )
+            {
+                $this->groupAttack( $army, $priority );
+                $army->groupAttack( $this, $priority );
+
+                $this->commit();
+                $army->commit();
+            }
+        }
+    }
+
+    /**
+     * Let the given priority group attack
+     * 
+     * @param Army $army 
+     * @param int $priority 
+     * @return void
+     */
+    protected function groupAttack( Army $army, $priority )
+    {
+        foreach ( $this->units[$priority] as $set )
+        {
+            $set->attack( $army );
+        }
+    }
+
+    /**
+     * Commit results of this attack round
+     * 
+     * @return void
+     */
+    public function commit()
+    {
+        foreach ( $this->getUnits() as $set )
+        {
+            $set->commit();
+        }
     }
 
     /**
@@ -55,7 +93,28 @@ class Army
      */
     public function getUnits()
     {
-        return $this->units;
+        $units = array();
+        foreach ( $this->units as $sets )
+        {
+            $units = array_merge( $units, $sets );
+        }
+        return $units;
+    }
+
+    /**
+     * Returns true if the army is still alive
+     * 
+     * @return void
+     */
+    public function isAlive()
+    {
+        $dead = true;
+        foreach ( $this->getUnits() as $set )
+        {
+            $dead = $dead && ( $set->health <= 0 );
+        }
+
+        return !$dead;
     }
 }
 
