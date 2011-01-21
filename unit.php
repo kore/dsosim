@@ -94,7 +94,7 @@ abstract class Unit
      * @param Army $army 
      * @return Unit
      */
-    public function determinNextTarget( Army $army )
+    public function determineNextTarget( Army $army )
     {
         // @TODO: Implement based on $attackOrder
     }

@@ -47,5 +47,15 @@ class Army
     {
         // @TODO: Implement
     }
+
+    /**
+     * Return aggregated unit sets.
+     * 
+     * @return array
+     */
+    public function getUnits()
+    {
+        return $this->units;
+    }
 }
 
