@@ -8,27 +8,30 @@ class ArmyFactory
      * @var array
      */
     protected static $mapping = array(
-        'CK' => 'Chuck',
-        'MG' => 'Metallgebiss',
-        'WW' => 'DieWildeWaltraud',
-        'R'  => 'Rekrut',
-        'PL' => 'Plünderer',
-        'M'  => 'Miliz',
-        'SL' => 'Schläger',
-        'R'  => 'Reiterei',
-        'WH' => 'Wachhund',
-        'S'  => 'Soldat',
-        'RB' => 'Raufbold',
-        'E'  => 'Elitesoldat',
-        'B'  => 'Bogenschütze',
-        'SW' => 'Steinwerfer',
-        'L'  => 'Langbogenschütze',
-        'WL' => 'Waldläufer',
-        'A'  => 'Armbrustschütze',
-        'K'  => 'Kanonier',
-        'G'  => 'General',
-        'EB' => 'EinäugigerBert',
-        'ST' => 'Stinktier',
+        // Own
+        'R'   => 'Rekrut',
+        'M'   => 'Miliz',
+        'C'   => 'Reiterei',
+        'S'   => 'Soldat',
+        'E'   => 'Elitesoldat',
+        'B'   => 'Bogenschütze',
+        'LB'  => 'Langbogenschütze',
+        'A'   => 'Armbrustschütze',
+        'K'   => 'Kanonier',
+        'G'   => 'General',
+       
+        // Barbarians
+        'PL'  => 'Plünderer',
+        'SL'  => 'Schläger',
+        'WH'  => 'Wachhund',
+        'RB'  => 'Raufbold',
+        'SW'  => 'Steinwerfer',
+        'WL'  => 'Waldläufer',
+        'EB'  => 'EinäugigerBert',
+        'ST'  => 'Stinktier',
+        'CK'  => 'Chuck',
+        'MG'  => 'Metallgebiss',
+        'DWW' => 'DieWildeWaltraud',
     );
 
     /**
