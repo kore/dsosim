@@ -46,10 +46,21 @@ class UnitSet
      */
     public function __construct( Unit $type, $count = 1 )
     {
-        $this->type          = $type;
+        $this->type = $type;
+        $this->setUnitCount( $count );
+    }
+
+    /**
+     * Set unit count
+     * 
+     * @param int $count 
+     * @return void
+     */
+    public function setUnitCount( $count )
+    {
         $this->count         = $count;
         $this->initialCount  = $count;
-        $this->health        = $count * $type->health;
+        $this->health        = $count * $this->type->health;
         $this->currentHealth = $this->health;
     }
 

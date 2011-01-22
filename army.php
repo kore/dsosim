@@ -116,5 +116,21 @@ class Army
 
         return !$dead;
     }
+
+    /**
+     * Recursively also clone aggregated sets
+     * 
+     * @return void
+     */
+    public function __clone()
+    {
+        foreach ( $this->units as $priority => $sets )
+        {
+            foreach ( $sets as $nr => $set )
+            {
+                $this->units[$priority][$nr] = clone $set;
+            }
+        }
+    }
 }
 
