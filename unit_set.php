@@ -89,28 +89,20 @@ class UnitSet
      */
     public function attack( Army $army )
     {
-        $attackPoints  = $this->type->getHitPoints();
-        $currentTarget = null;
+        $attackPoints  = $this->type->getHitPoints() * $this->count;
+        do {
+            $currentTarget = $this->type->determineNextTarget( $army );
 
-        for ( $i = 0; $i < $this->count; ++$i )
-        {
-            if ( $currentTarget === null )
+            if ( $currentTarget === false )
             {
-                $currentTarget = $this->type->determineNextTarget( $army );
-
-                if ( $currentTarget === false )
-                {
-                    return;
-                }
+                return;
             }
 
+//            echo get_class( $this->type ) . ' => ' . get_class( $currentTarget->type ) . ': ' . $attackPoints, "\n";
+
+            $remaining = $attackPoints - $currentTarget->currentHealth;
             $currentTarget->hit( $attackPoints );
-
-            if ( $currentTarget->currentHealth <= 0 )
-            {
-                $currentTarget = null;
-            }
-        }
+        } while ( ( $attackPoints = $remaining ) > 0 );
     }
 
     /**

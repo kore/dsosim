@@ -8,9 +8,9 @@ class Army
      * @var array
      */
     protected $units = array(
-        Unit::LOW    => array(),
-        Unit::MEDIUM => array(),
         Unit::HIGH   => array(),
+        Unit::MEDIUM => array(),
+        Unit::LOW    => array(),
     );
 
     /**
