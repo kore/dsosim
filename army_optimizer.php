@@ -65,7 +65,7 @@ class ArmyOptimizer
             );
         }
 
-        return $armies;
+        return $this->removeDuplicates( $armies );
     }
 
     /**
@@ -171,6 +171,22 @@ class ArmyOptimizer
         }
 
         return $armies;
+    }
+
+    protected function removeDuplicates( array $armies )
+    {
+        $filtered = array();
+        foreach ( $armies as $army )
+        {
+            $identifier = '';
+            foreach ( $army->getUnits() as $set )
+            {
+                $identifier .= $set->count . get_class( $set->type );
+            }
+            $filtered[$identifier] = $army;
+        }
+
+        return array_values( $filtered );
     }
 }
 
