@@ -21,7 +21,10 @@ class ArmyOptimizer
     {
         $armies    = $this->getVariations( $attacker );
         $minLosses = 1024;
-        $results   = array();
+        $results   = array(
+            'losses' => array(),
+            'army'   => array(),
+        );
 
         echo "Evaluating ", count( $armies ), " different armies:\n\n";
 

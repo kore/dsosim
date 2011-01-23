@@ -28,3 +28,8 @@ foreach ( $results['army'] as $nr => $army )
     if ( ++$i >= 10 ) return;
 }
 
+if ( $i === 0 )
+{
+    echo "There is no way to win this fight.\n";
+}
+
