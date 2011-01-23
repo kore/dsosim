@@ -119,7 +119,7 @@ class UnitSet
      */
     protected function bossAttack( Army $army )
     {
-        $attackPoints  = $this->type->getHitPoints() * $this->count;
+        $attackPoints  = $this->type->getHitPoints();
         do {
             $currentTarget = $this->type->determineNextTarget( $army );
 
@@ -141,11 +141,14 @@ class UnitSet
      */
     protected function commonAttack( Army $army )
     {
-        $attackPoints = $this->type->getHitPoints();
-        $unit         = 0;
+        $unit          = 0;
+        $currentTarget = null;
         while ( $unit < $this->count )
         {
-            $currentTarget = $this->type->determineNextTarget( $army );
+            if ( $currentTarget === null )
+            {
+                $currentTarget = $this->type->determineNextTarget( $army );
+            }
 
             if ( $currentTarget === false )
             {
@@ -154,10 +157,15 @@ class UnitSet
 
             $currentTarget->hit(
                 min(
-                    $attackPoints,
+                    $this->type->getHitPoints(),
                     $currentTarget->currentHealth % $currentTarget->type->health ?: $currentTarget->type->health
                 )
             );
+
+            if ( $currentTarget->currentHealth <= 0 )
+            {
+                $currentHealth = null;
+            }
 
             ++$unit;
         }
