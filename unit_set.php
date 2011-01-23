@@ -100,6 +100,25 @@ class UnitSet
      */
     public function attack( Army $army )
     {
+        if ( $this->type->isBoss )
+        {
+            $this->bossAttack( $army );
+        }
+        else
+        {
+            $this->commonAttack( $army );
+        }
+    }
+
+    /**
+     * Perform a boss attack where remaining hit points are populated to the 
+     * next unit.
+     * 
+     * @param Army $army 
+     * @return void
+     */
+    protected function bossAttack( Army $army )
+    {
         $attackPoints  = $this->type->getHitPoints() * $this->count;
         do {
             $currentTarget = $this->type->determineNextTarget( $army );
@@ -109,11 +128,39 @@ class UnitSet
                 return;
             }
 
-//            echo get_class( $this->type ) . ' => ' . get_class( $currentTarget->type ) . ': ' . $attackPoints, "\n";
-
             $remaining = $attackPoints - $currentTarget->currentHealth;
             $currentTarget->hit( $attackPoints );
         } while ( ( $attackPoints = $remaining ) > 0 );
+    }
+
+    /**
+     * Perform a common attack, where each unit attacks exactly one unit.
+     * 
+     * @param Army $army 
+     * @return void
+     */
+    protected function commonAttack( Army $army )
+    {
+        $attackPoints = $this->type->getHitPoints();
+        $unit         = 0;
+        while ( $unit < $this->count )
+        {
+            $currentTarget = $this->type->determineNextTarget( $army );
+
+            if ( $currentTarget === false )
+            {
+                return;
+            }
+
+            $currentTarget->hit(
+                min(
+                    $attackPoints,
+                    $currentTarget->currentHealth % $currentTarget->type->health ?: $currentTarget->type->health
+                )
+            );
+
+            ++$unit;
+        }
     }
 
     /**
