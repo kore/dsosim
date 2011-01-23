@@ -14,7 +14,7 @@ abstract class Unit
      * 
      * @var int
      */
-    protected $priority;
+    protected $priority = self::MEDIUM;
 
     /**
      * Minimum hit points of the unit
@@ -42,7 +42,14 @@ abstract class Unit
      * 
      * @var bool
      */
-    protected $tower;
+    protected $tower = false;
+
+    /**
+     * If the unit is a boss, which means that it may attack multiple units
+     * 
+     * @var bool
+     */
+    protected $isBoss = false;
 
     /**
      * Common attack order for units

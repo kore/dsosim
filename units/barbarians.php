@@ -5,11 +5,9 @@ class Plünderer extends Unit
     public function __construct()
     {
         $this->health         = 40;
-        $this->priority       = Unit::MEDIUM;
         $this->minHitPoints   = 15;
         $this->bonusHitPoints = 15;
         $this->hitProbability = .6;
-        $this->tower          = false;
     }
 }
 
@@ -18,11 +16,9 @@ class Schläger extends Unit
     public function __construct()
     {
         $this->health         = 60;
-        $this->priority       = Unit::MEDIUM;
         $this->minHitPoints   = 20;
         $this->bonusHitPoints = 20;
         $this->hitProbability = .6;
-        $this->tower          = false;
     }
 }
 
@@ -35,7 +31,6 @@ class Wachhund extends FastUnit
         $this->minHitPoints   = 5;
         $this->bonusHitPoints = 5;
         $this->hitProbability = .6;
-        $this->tower          = false;
     }
 }
 
@@ -44,11 +39,9 @@ class Raufbold extends Unit
     public function __construct()
     {
         $this->health         = 90;
-        $this->priority       = Unit::MEDIUM;
         $this->minHitPoints   = 20;
         $this->bonusHitPoints = 20;
         $this->hitProbability = .6;
-        $this->tower          = false;
     }
 }
 
@@ -57,7 +50,6 @@ class Steinwerfer extends Unit
     public function __construct()
     {
         $this->health         = 10;
-        $this->priority       = Unit::MEDIUM;
         $this->minHitPoints   = 20;
         $this->bonusHitPoints = 20;
         $this->hitProbability = .6;
@@ -70,7 +62,6 @@ class Waldläufer extends Unit
     public function __construct()
     {
         $this->health         = 10;
-        $this->priority       = Unit::MEDIUM;
         $this->minHitPoints   = 30;
         $this->bonusHitPoints = 30;
         $this->hitProbability = .6;
@@ -87,7 +78,7 @@ class EinäugigerBert extends Unit
         $this->minHitPoints   = 300;
         $this->bonusHitPoints = 200;
         $this->hitProbability = .5;
-        $this->tower          = false;
+        $this->isBoss         = true;
     }
 }
 
@@ -100,7 +91,7 @@ class Stinktier extends Unit
         $this->minHitPoints   = 1;
         $this->bonusHitPoints = 99;
         $this->hitProbability = .5;
-        $this->tower          = false;
+        $this->isBoss         = true;
     }
 }
 
@@ -113,7 +104,7 @@ class Chuck extends Unit
         $this->minHitPoints   = 2000;
         $this->bonusHitPoints = 500;
         $this->hitProbability = .5;
-        $this->tower          = false;
+        $this->isBoss         = true;
     }
 }
 
@@ -126,7 +117,7 @@ class Metallgebiss extends Unit
         $this->minHitPoints   = 250;
         $this->bonusHitPoints = 250;
         $this->hitProbability = .5;
-        $this->tower          = false;
+        $this->isBoss         = true;
     }
 }
 
@@ -139,7 +130,7 @@ class DieWildeWaltraud extends Unit
         $this->minHitPoints   = 740;
         $this->bonusHitPoints = 60;
         $this->hitProbability = .5;
-        $this->tower          = false;
+        $this->isBoss         = true;
     }
 }
 
