@@ -155,31 +155,18 @@ class UnitSet
                 return;
             }
 
-            $currentTarget->hit(
-                min(
-                    $this->type->getHitPoints(),
-                    $currentTarget->currentHealth % $currentTarget->type->health ?: $currentTarget->type->health
-                )
+            $currentTarget->currentHealth -= min(
+                $this->type->getHitPoints(),
+                $currentTarget->currentHealth % $currentTarget->type->health ?: $currentTarget->type->health
             );
 
             if ( $currentTarget->currentHealth <= 0 )
             {
-                $currentHealth = null;
+                $currentTarget = null;
             }
 
             ++$unit;
         }
-    }
-
-    /**
-     * Hit this unit set with the given amount of attack points.
-     * 
-     * @param float $attackPoints 
-     * @return void
-     */
-    public function hit( $attackPoints )
-    {
-        $this->currentHealth -= $attackPoints;
     }
 
     /**

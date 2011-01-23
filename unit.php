@@ -57,27 +57,27 @@ abstract class Unit
      * @var array
      */
     protected $attackOrder = array(
-        'Chuck',
-        'Metallgebiss',
-        'DieWildeWaltraud',
-        'Rekrut',
-        'Plünderer',
-        'Miliz',
-        'Schläger',
-        'Reiterei',
-        'Wachhund',
-        'Soldat',
-        'Raufbold',
-        'Elitesoldat',
-        'Bogenschütze',
-        'Steinwerfer',
-        'Langbogenschütze',
-        'Waldläufer',
-        'Armbrustschütze',
-        'Kanonier',
-        'General',
-        'EinäugigerBert',
-        'Stinktier',
+        'Chuck'             => 0,
+        'Metallgebiss'      => 0,
+        'DieWildeWaltraud'  => 0,
+        'Rekrut'            => 1,
+        'Plünderer'         => 1,
+        'Miliz'             => 2,
+        'Schläger'          => 2,
+        'Reiterei'          => 3,
+        'Wachhund'          => 3,
+        'Soldat'            => 4,
+        'Raufbold'          => 4,
+        'Elitesoldat'       => 5,
+        'Bogenschütze'      => 6,
+        'Steinwerfer'       => 6,
+        'Langbogenschütze'  => 7,
+        'Waldläufer'        => 7,
+        'Armbrustschütze'   => 8,
+        'Kanonier'          => 9,
+        'General'           => 10,
+        'EinäugigerBert'    => 10,
+        'Stinktier'         => 10,
     );
 
     /**
@@ -144,7 +144,7 @@ abstract class Unit
             $orderedSets,
             function ( $a, $b ) use ( $attackOrder )
             {
-                return array_search( get_class( $a->type ), $attackOrder ) - array_search( get_class( $b->type ), $attackOrder );
+                return $attackOrder[get_class( $a->type )] - $attackOrder[get_class( $b->type )];
             }
         );
 
@@ -158,7 +158,8 @@ abstract class Unit
      */
     public function getHitPoints()
     {
-        return $this->minHitPoints + $this->bonusHitPoints * $this->hitProbability;
+        return $this->minHitPoints +
+            ( ( mt_rand( 0, 100 ) / 100 ) > $this->hitProbability ? 0 : $this->bonusHitPoints * $this->hitProbability );
     }
 }
 
