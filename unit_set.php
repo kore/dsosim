@@ -129,7 +129,7 @@ class UnitSet
             }
 
             $remaining = $attackPoints - $currentTarget->currentHealth;
-            $currentTarget->hit( $attackPoints );
+            $currentTarget->currentHealth -= $attackPoints;
         } while ( ( $attackPoints = $remaining ) > 0 );
     }
 
