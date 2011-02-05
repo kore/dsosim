@@ -159,7 +159,7 @@ abstract class Unit
     public function getHitPoints()
     {
         return $this->minHitPoints +
-            ( ( mt_rand( 0, 100 ) / 100 ) > $this->hitProbability ? 0 : $this->bonusHitPoints * $this->hitProbability );
+            ( ( mt_rand( 0, 100 ) / 100 ) > $this->hitProbability ? 0 : $this->bonusHitPoints );
     }
 }
 
