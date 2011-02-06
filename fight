@@ -17,6 +17,6 @@ $attacker->attack( $defender );
 $printer = new ArmyPrinter();
 
 $printer->visit( $attacker );
-echo "\nversus:\n\n";
+echo "\nversus (" . $attacker->getRounds() . " rounds):\n\n";
 $printer->visit( $defender );
 

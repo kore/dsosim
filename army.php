@@ -14,6 +14,13 @@ class Army
     );
 
     /**
+     * Number of rounds fought
+     * 
+     * @var int
+     */
+    protected $rounds = 0;
+
+    /**
      * Construct from any amount of unit sets
      * 
      * @return void
@@ -47,6 +54,8 @@ class Army
     {
         while ( $this->isAlive() && $army->isAlive() )
         {
+            $this->rounds++;
+
             foreach ( $this->units as $priority => $sets )
             {
                 $this->groupAttack( $army, $priority );
@@ -99,6 +108,16 @@ class Army
             $units = array_merge( $units, $sets );
         }
         return $units;
+    }
+
+    /**
+     * Get number of fought rounds
+     * 
+     * @return int
+     */
+    public function getRounds()
+    {
+        return $this->rounds;
     }
 
     /**
