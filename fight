@@ -12,11 +12,6 @@ if ( !isset( $argv[1] ) || !isset( $argv[2] ) )
 $attacker = ArmyFactory::factory( $argv[1] );
 $defender = ArmyFactory::factory( $argv[2] );
 
-$attacker->attack( $defender );
-
-$printer = new ArmyPrinter();
-
-$printer->visit( $attacker );
-echo "\nversus (" . $attacker->getRounds() . " rounds):\n\n";
-$printer->visit( $defender );
+$average = new MultiFight( $attacker, $defender );
+$average->run( 10 );
 
