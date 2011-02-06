@@ -42,7 +42,7 @@ class ArmyFactory
      */
     public static function factory( $specification )
     {
-        preg_match_all( '((?P<count>\\d+)(?P<type>[A-Z]+))', $specification, $matches, PREG_SET_ORDER );
+        preg_match_all( '((?P<count>\\d+)(?P<type>[A-Z]+))', strtoupper( $specification ), $matches, PREG_SET_ORDER );
 
         $army = new Army();
         foreach ( $matches as $set )
