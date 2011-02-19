@@ -3,15 +3,77 @@
 
 require __DIR__ . '/bootstrap.php';
 
-if ( !isset( $argv[1] ) || !isset( $argv[2] ) )
+// Handle provided options
+$defaults = array(
+    'help'       => null,
+    'iterations' => 10,
+    'colors'     => true,
+    'optimize'   => false,
+    'list'       => false,
+);
+
+$mapping = array(
+    'h' => 'help',
+    'i' => 'iterations',
+    'c' => 'colors',
+    'o' => 'optimize',
+    'l' => 'list',
+);
+
+$options = getopt(
+    'hi:col',
+    array(
+        'help',
+        'iterations:',
+        'colors',
+        'optimize',
+        'list',
+    )
+);
+
+// Merge options
+foreach ( $mapping as $short => $long )
 {
-    echo "You need to specify two army specification strings.", PHP_EOL;
-    exit( 1 );
+    if ( isset( $options[$short] ) &&
+         !isset( $options[$long] ) )
+    {
+        $options[$long] = $options[$short];
+        unset( $options[$short] );
+    }
+}
+$options += $defaults;
+
+// Show help output, if requested
+if ( ( $options['help'] !== null ) ||
+     ( count( $argv ) <= 1 ) )
+{
+    echo <<<EOHELP
+Die Siedler Online fight simulator
+by Kore Nordmann
+
+Usage: {$argv[0]} [options] <army> <army>
+
+Options:
+
+-h / --help         Display this help output
+
+-i / --iterations   Number of iterations in simulations.
+
+-c / --colors       Enable output coloring
+
+-o / --optimize     Use army set optimization
+
+-l / --list         List all unit abbreviations
+
+The fight specification should look like "20R10B".
+
+EOHELP;
+    exit( 0 );
 }
 
-$attacker = ArmyFactory::factory( $argv[1] );
-$defender = ArmyFactory::factory( $argv[2] );
+$defender = ArmyFactory::factory( array_pop( $argv ) );
+$attacker = ArmyFactory::factory( array_pop( $argv ) );
 
 $average = new MultiFight( $attacker, $defender );
-$average->run( 10 );
+$average->run( $options['iterations'] );
 
