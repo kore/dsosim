@@ -1,6 +1,6 @@
 <?php
 
-class ArmyOptimizer
+class FightOptimizer extends Fight
 {
     /**
      * Maximum army size
@@ -13,13 +13,11 @@ class ArmyOptimizer
      *
      * Returns the optimized army with the lowest losses.
      * 
-     * @param Army $attacker 
-     * @param Army $defender 
-     * @return Army
+     * @return void
      */
-    public function optimize( Army $attacker, Army $defender )
+    public function run()
     {
-        $armies    = $this->getVariations( $attacker );
+        $armies    = $this->getVariations( $this->attacker );
         $minLosses = 1024;
         $results   = array(
             'losses' => array(),
@@ -30,7 +28,7 @@ class ArmyOptimizer
 
         foreach ( $armies as $attacker )
         {
-            $defenderClone = clone $defender;
+            $defenderClone = clone $this->defender;
             $attacker->attack( $defenderClone );
 
             $losses = 0;
