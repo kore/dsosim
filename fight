@@ -3,15 +3,120 @@
 
 require __DIR__ . '/bootstrap.php';
 
-if ( !isset( $argv[1] ) || !isset( $argv[2] ) )
+// Handle provided options
+$defaults = array(
+    'help'       => null,
+    'iterations' => 10,
+    'colors'     => true,
+    'optimize'   => null,
+    'list'       => null,
+);
+
+$mapping = array(
+    'h' => 'help',
+    'i' => 'iterations',
+    'c' => 'colors',
+    'o' => 'optimize',
+    'l' => 'list',
+);
+
+$options = getopt(
+    'hi:col',
+    array(
+        'help',
+        'iterations:',
+        'colors',
+        'optimize',
+        'list',
+    )
+);
+
+// Merge options
+foreach ( $mapping as $short => $long )
 {
-    echo "You need to specify two army specification strings.", PHP_EOL;
-    exit( 1 );
+    if ( isset( $options[$short] ) &&
+         !isset( $options[$long] ) )
+    {
+        $options[$long] = $options[$short];
+        unset( $options[$short] );
+    }
+}
+$options += $defaults;
+
+// Show help output, if requested
+if ( ( $options['help'] !== null ) ||
+     ( count( $argv ) <= 1 ) )
+{
+    echo <<<EOHELP
+Die Siedler Online fight simulator
+by Kore Nordmann
+
+Usage: {$argv[0]} [options] <army> <army>
+
+Options:
+
+-h / --help         Display this help output
+
+-i / --iterations   Number of iterations in simulations.
+
+-c / --colors       Enable output coloring
+
+-o / --optimize     Use army set optimization
+
+-l / --list         List all unit abbreviations
+
+The fight specification should look like "20R10B".
+
+EOHELP;
+    exit( 0 );
 }
 
-$attacker = ArmyFactory::factory( $argv[1] );
-$defender = ArmyFactory::factory( $argv[2] );
+$armyFactory = new ArmyFactory();
 
-$average = new MultiFight( $attacker, $defender );
-$average->run( 10 );
+// Show list of abbreviations, if requested
+if ( $options['list'] !== null )
+{
+    echo "Unit type abbreviations:\n\n";
+    foreach ( $armyFactory->getAbbreviationList() as $abbreviation => $name )
+    {
+        printf( "% 5s %s\n",
+            $abbreviation,
+            $name
+        );
+    }
+
+    exit( 0 );
+}
+
+$defender = $armyFactory->factory( array_pop( $argv ) );
+$attacker = $armyFactory->factory( array_pop( $argv ) );
+
+if ( $options['optimize'] !== null )
+{
+    $optimzer = new ArmyOptimizer();
+    $results = $optimzer->optimize( $attacker, $defender );
+
+    echo "Best results:\n\n";
+
+    $i = 0;
+    foreach ( $results['army'] as $nr => $army )
+    {
+        echo $results['losses'][$nr], " losses:\n";
+        $printer = new ArmyPrinter();
+        $printer->visit( $army );
+        echo "\n";
+
+        if ( ++$i >= 10 ) return;
+    }
+
+    if ( $i === 0 )
+    {
+        echo "There is no way to win this fight.\n";
+    }
+}
+else
+{
+    $average = new MultiFight( $attacker, $defender );
+    $average->run( $options['iterations'] );
+}
 
