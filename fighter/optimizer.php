@@ -8,6 +8,24 @@ class FightOptimizer extends Fight
     const MAX_SIZE = 200;
 
     /**
+     * Aggregated fighter to run the actual fights
+     * 
+     * @var Fight
+     */
+    protected $fighter;
+
+    /**
+     * Construct from fighter used during optimization
+     * 
+     * @param Fight $fighter 
+     * @return void
+     */
+    public function __construct( Fight $fighter = null )
+    {
+        $this->fighter = ( $fighter === null ) ? new MultiFight( 1 ) : $fighter;
+    }
+
+    /**
      * Optimize the configuration of the atacker army for minimal losses 
      * against the defender.
      *
@@ -15,9 +33,9 @@ class FightOptimizer extends Fight
      * 
      * @return void
      */
-    public function run()
+    public function fight( Army $attacker, Army $defender )
     {
-        $armies    = $this->getVariations( $this->attacker );
+        $armies    = $this->getVariations( $attacker );
         $minLosses = 1024;
         $results   = array(
             'losses' => array(),
@@ -28,7 +46,7 @@ class FightOptimizer extends Fight
 
         foreach ( $armies as $attacker )
         {
-            $defenderClone = clone $this->defender;
+            $defenderClone = clone $defender;
             $attacker->attack( $defenderClone );
 
             $losses = 0;

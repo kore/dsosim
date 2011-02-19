@@ -3,25 +3,43 @@
 class MultiFight extends Fight
 {
     /**
+     * Iterations for the fights run
+     * 
+     * @var int
+     */
+    protected $iterations = 10;
+
+    /**
+     * Construct from the number of fight iterations
+     * 
+     * @param int $iterations 
+     * @return void
+     */
+    public function __construct( $iterations = 10 )
+    {
+        $this->iterations = $iterations;
+    }
+
+    /**
      * Run multiple fights and print the average results
      * 
      * @param int $count 
      * @return void
      */
-    public function run( $count = 1 )
+    public function fight( Army $attacker, Army $defender )
     {
-        echo "$count iterations:\n\n";
+        echo "{$this->iterations} iterations:\n\n";
         $results = array();
 
-        for ( $i = 0; $i < $count; ++$i )
+        for ( $i = 0; $i < $this->iterations; ++$i )
         {
-            $attacker = clone $this->attacker;
-            $defender = clone $this->defender;
+            $localAttacker = clone $attacker;
+            $localDefender = clone $defender;
 
-            $attacker->attack( $defender );
+            $localAttacker->attack( $localDefender );
             $results[] = array(
-                'attacker' => $attacker,
-                'defender' => $defender,
+                'attacker' => $localAttacker,
+                'defender' => $localDefender,
             );
         }
 

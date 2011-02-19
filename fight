@@ -93,8 +93,8 @@ $attacker = $armyFactory->factory( array_pop( $argv ) );
 
 if ( $options['optimize'] !== null )
 {
-    $optimzer = new FightOptimizer( $attacker, $defender );
-    $results = $optimzer->run();
+    $optimzer = new FightOptimizer();
+    $results = $optimzer->fight( $attacker, $defender );
 
     echo "Best results:\n\n";
 
@@ -116,7 +116,7 @@ if ( $options['optimize'] !== null )
 }
 else
 {
-    $average = new MultiFight( $attacker, $defender );
-    $average->run( $options['iterations'] );
+    $average = new MultiFight( $options['iterations'] );
+    $average->fight( $attacker, $defender );
 }
 
