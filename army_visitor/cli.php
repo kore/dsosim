@@ -14,10 +14,14 @@ class ArmyCliVisitor extends ArmyVisitor
 
     public function visitFightResult( Result $result )
     {
-        echo "Attacker:\n";
-        $this->visit( $result->attacker );
+        echo $result->attacker->getLosses() . " units lost:\n\n";
 
-        echo "Defender:\n";
+        $this->visit( $result->attacker );
+        printf( "\n  versus (%.1f rounds (%d - %d))\n\n",
+            $result->rounds,
+            $result->minRounds,
+            $result->maxRounds
+        );
         $this->visit( $result->defender );
     }
 
@@ -33,7 +37,7 @@ class ArmyCliVisitor extends ArmyVisitor
 
     public function visitUnitResult( UnitResult $result )
     {
-        printf( " - %s%s: %s of % 3d (% 3d - % 3d) (%s)\n",
+        printf( "   - %s%s: %s of % 3d (% 3d - % 3d) (%s)\n",
             $result->name,
             str_repeat( ' ', 20 - iconv_strlen( $result->name, 'UTF-8' ) ),
             $this->printFloat( $result->count ),

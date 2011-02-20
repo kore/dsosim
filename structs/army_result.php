@@ -22,5 +22,18 @@ class ArmyResult
 
         return $losses;
     }
+
+    public function isAlive()
+    {
+        foreach ( $this->units as $unit )
+        {
+            if ( $unit->count > 0 )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 

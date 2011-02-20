@@ -44,11 +44,19 @@ class FightOptimizer extends Fight
             $results->fights[] = $this->fighter->fight( $attacker, clone $defender );
         };
 
+        $results->fights = array_filter(
+            $results->fights,
+            function ( $value )
+            {
+                return $value->attacker->isAlive();
+            }
+        );
+
         usort(
             $results->fights,
             function ( Result $a, Result $b )
             {
-                return $a->attacker->getLosses() - $b->attacker->getLosses();
+                return (int) ( ( $a->attacker->getLosses() - $b->attacker->getLosses() ) * 100 );
             }
         );
         return $results;

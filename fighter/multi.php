@@ -110,6 +110,13 @@ class MultiFight extends Fight
             }
         }
 
+        $result->rounds = $result->attacker->units['rounds']->count;
+        $result->minRounds = $result->attacker->units['rounds']->minCount;
+        $result->maxRounds = $result->attacker->units['rounds']->maxCount;
+
+        unset( $result->attacker->units['rounds'] );
+        unset( $result->defender->units['rounds'] );
+
         return $result;
     }
 }

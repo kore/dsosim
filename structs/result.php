@@ -12,6 +12,21 @@ class Result
      */
     public $defender;
 
+    /**
+     * @var float
+     */
+    public $rounds;
+
+    /**
+     * @var int
+     */
+    public $minRounds;
+
+    /**
+     * @var int
+     */
+    public $maxRounds;
+
     public function __construct()
     {
         $this->attacker = new ArmyResult();
