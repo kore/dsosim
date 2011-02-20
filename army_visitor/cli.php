@@ -14,7 +14,10 @@ class ArmyCliVisitor extends ArmyVisitor
 
     public function visitFightResult( Result $result )
     {
-        echo $result->attacker->getLosses() . " units lost:\n\n";
+        echo
+            ( $result->attacker->isAlive() ? 'Won fight' : 'Lost fight' ),
+            ' with ',
+            $result->attacker->getLosses() . " units lost:\n\n";
 
         $this->visit( $result->attacker );
         printf( "  versus (%.1f rounds (%d - %d))\n\n",
