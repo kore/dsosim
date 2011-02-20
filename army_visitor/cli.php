@@ -17,7 +17,7 @@ class ArmyCliVisitor extends ArmyVisitor
         echo $result->attacker->getLosses() . " units lost:\n\n";
 
         $this->visit( $result->attacker );
-        printf( "\n  versus (%.1f rounds (%d - %d))\n\n",
+        printf( "  versus (%.1f rounds (%d - %d))\n\n",
             $result->rounds,
             $result->minRounds,
             $result->maxRounds
