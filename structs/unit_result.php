@@ -27,7 +27,7 @@ class UnitResult
      */
     public $minCount;
 
-    public function __construct( $name, $count, $initialCount, $minCount = 0, $maxCount = PHP_INT_MAX )
+    public function __construct( $name, $count, $initialCount, $minCount = PHP_INT_MAX, $maxCount = 0 )
     {
         $this->name         = $name;
         $this->count        = $count;
