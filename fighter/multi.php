@@ -71,8 +71,8 @@ class MultiFight extends Fight
                 }
 
                 $array[$nr][$name]['rounds'] = array(
-                    'initial' => 1,
                     'count'   => $army->getRounds(),
+                    'initial' => 1,
                 );
             }
         }

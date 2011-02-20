@@ -93,30 +93,17 @@ $attacker = $armyFactory->factory( array_pop( $argv ) );
 
 if ( $options['optimize'] !== null )
 {
-    $optimzer = new FightOptimizer(
+    $fighter = new FightOptimizer(
         new MultiFight( $options['iterations'] )
     );
-    $results = $optimzer->fight( $attacker, $defender );
-
-    $i = 0;
-    foreach ( $results['army'] as $nr => $army )
-    {
-        echo $results['losses'][$nr], " losses:\n";
-        $printer = new ArmyPrinter();
-        $printer->visit( $army );
-        echo "\n";
-
-        if ( ++$i >= 10 ) return;
-    }
-
-    if ( $i === 0 )
-    {
-        echo "There is no way to win this fight.\n";
-    }
 }
 else
 {
-    $average = new MultiFight( $options['iterations'] );
-    $average->fight( $attacker, $defender );
+    $fighter = new MultiFight( $options['iterations'] );
 }
+
+$visitor = new ArmyCliVisitor();
+$visitor->visit(
+    $fighter->fight( $attacker, $defender )
+);
 
