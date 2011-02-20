@@ -93,10 +93,10 @@ $attacker = $armyFactory->factory( array_pop( $argv ) );
 
 if ( $options['optimize'] !== null )
 {
-    $optimzer = new FightOptimizer();
+    $optimzer = new FightOptimizer(
+        new MultiFight( $options['iterations'] )
+    );
     $results = $optimzer->fight( $attacker, $defender );
-
-    echo "Best results:\n\n";
 
     $i = 0;
     foreach ( $results['army'] as $nr => $army )

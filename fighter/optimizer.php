@@ -35,34 +35,22 @@ class FightOptimizer extends Fight
      */
     public function fight( Army $attacker, Army $defender )
     {
-        $armies    = $this->getVariations( $attacker );
-        $minLosses = 1024;
-        $results   = array(
-            'losses' => array(),
-            'army'   => array(),
-        );
-
-        echo "Evaluating ", count( $armies ), " different armies:\n\n";
+        $armies         = $this->getVariations( $attacker );
+        $results        = new OptimizeResult();
+        $results->tries = count( $armies );
 
         foreach ( $armies as $attacker )
         {
-            $defenderClone = clone $defender;
-            $attacker->attack( $defenderClone );
+            $results->fights[] = $this->fighter->fight( $attacker, clone $defender );
+        };
 
-            $losses = 0;
-            foreach ( $attacker->getUnits() as $set )
+        usort(
+            $results->fights,
+            function ( Result $a, Result $b )
             {
-                $losses += $set->initialCount - $set->count;
+                return $a->attacker->getLosses() - $b->attacker->getLosses();
             }
-
-            if ( $attacker->isAlive() && !$defenderClone->isAlive() )
-            {
-                $results['losses'][] = $losses;
-                $results['army'][]   = $attacker;
-            }
-        }
-
-        array_multisort( $results['losses'], SORT_NUMERIC, SORT_ASC, $results['army'] );
+        );
         return $results;
     }
 
@@ -192,6 +180,12 @@ class FightOptimizer extends Fight
         return $armies;
     }
 
+    /**
+     * Remove duplicate armies
+     * 
+     * @param array $armies 
+     * @return array
+     */
     protected function removeDuplicates( array $armies )
     {
         $filtered = array();
