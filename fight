@@ -8,8 +8,8 @@ $defaults = array(
     'help'       => null,
     'iterations' => 10,
     'colors'     => true,
-    'optimize'   => false,
-    'list'       => false,
+    'optimize'   => null,
+    'list'       => null,
 );
 
 $mapping = array(
@@ -71,9 +71,39 @@ EOHELP;
     exit( 0 );
 }
 
-$defender = ArmyFactory::factory( array_pop( $argv ) );
-$attacker = ArmyFactory::factory( array_pop( $argv ) );
+$armyFactory = new ArmyFactory();
 
-$average = new MultiFight( $attacker, $defender );
-$average->run( $options['iterations'] );
+// Show list of abbreviations, if requested
+if ( $options['list'] !== null )
+{
+    echo "Unit type abbreviations:\n\n";
+    foreach ( $armyFactory->getAbbreviationList() as $abbreviation => $name )
+    {
+        printf( "% 5s %s\n",
+            $abbreviation,
+            $name
+        );
+    }
+
+    exit( 0 );
+}
+
+$defender = $armyFactory->factory( array_pop( $argv ) );
+$attacker = $armyFactory->factory( array_pop( $argv ) );
+
+if ( $options['optimize'] !== null )
+{
+    $fighter = new FightOptimizer(
+        new MultiFight( $options['iterations'] )
+    );
+}
+else
+{
+    $fighter = new MultiFight( $options['iterations'] );
+}
+
+$visitor = new ArmyCliVisitor();
+$visitor->visit(
+    $fighter->fight( $attacker, $defender )
+);
 

@@ -1,6 +1,6 @@
 <?php
 
-class ArmyOptimizer
+class FightOptimizer extends Fight
 {
     /**
      * Maximum army size
@@ -8,45 +8,57 @@ class ArmyOptimizer
     const MAX_SIZE = 200;
 
     /**
+     * Aggregated fighter to run the actual fights
+     * 
+     * @var Fight
+     */
+    protected $fighter;
+
+    /**
+     * Construct from fighter used during optimization
+     * 
+     * @param Fight $fighter 
+     * @return void
+     */
+    public function __construct( Fight $fighter = null )
+    {
+        $this->fighter = ( $fighter === null ) ? new MultiFight( 1 ) : $fighter;
+    }
+
+    /**
      * Optimize the configuration of the atacker army for minimal losses 
      * against the defender.
      *
      * Returns the optimized army with the lowest losses.
      * 
-     * @param Army $attacker 
-     * @param Army $defender 
-     * @return Army
+     * @return void
      */
-    public function optimize( Army $attacker, Army $defender )
+    public function fight( Army $attacker, Army $defender )
     {
-        $armies    = $this->getVariations( $attacker );
-        $minLosses = 1024;
-        $results   = array(
-            'losses' => array(),
-            'army'   => array(),
-        );
-
-        echo "Evaluating ", count( $armies ), " different armies:\n\n";
+        $armies         = $this->getVariations( $attacker );
+        $results        = new OptimizeResult();
+        $results->tries = count( $armies );
 
         foreach ( $armies as $attacker )
         {
-            $defenderClone = clone $defender;
-            $attacker->attack( $defenderClone );
+            $results->fights[] = $this->fighter->fight( $attacker, clone $defender );
+        };
 
-            $losses = 0;
-            foreach ( $attacker->getUnits() as $set )
+        $results->fights = array_filter(
+            $results->fights,
+            function ( $value )
             {
-                $losses += $set->initialCount - $set->count;
+                return $value->attacker->isAlive();
             }
+        );
 
-            if ( $attacker->isAlive() && !$defenderClone->isAlive() )
+        usort(
+            $results->fights,
+            function ( Result $a, Result $b )
             {
-                $results['losses'][] = $losses;
-                $results['army'][]   = $attacker;
+                return (int) ( ( $a->attacker->getLosses() - $b->attacker->getLosses() ) * 100 );
             }
-        }
-
-        array_multisort( $results['losses'], SORT_NUMERIC, SORT_ASC, $results['army'] );
+        );
         return $results;
     }
 
@@ -176,6 +188,12 @@ class ArmyOptimizer
         return $armies;
     }
 
+    /**
+     * Remove duplicate armies
+     * 
+     * @param array $armies 
+     * @return array
+     */
     protected function removeDuplicates( array $armies )
     {
         $filtered = array();
