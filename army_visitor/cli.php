@@ -6,8 +6,14 @@ class ArmyCliVisitor extends ArmyVisitor
     {
         echo "Evaluated {$result->tries} different armies\n\n";
 
+        $max = 10;
         foreach ( $result->fights as $fight )
         {
+            if ( --$max < 0 )
+            {
+                break;
+            }
+
             $this->visit( $fight );
         }
     }
