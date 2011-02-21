@@ -15,8 +15,9 @@ class MultiFight extends Fight
      * @param int $iterations 
      * @return void
      */
-    public function __construct( $iterations = 10 )
+    public function __construct( $inTower = false, $iterations = 10 )
     {
+        parent::__construct( $inTower );
         $this->iterations = $iterations;
     }
 
