@@ -90,6 +90,7 @@ class MultiFight extends Fight
     {
         $result = new Result();
         $count  = count( $results );
+        $result->evaluations = $count;
 
         foreach ( $results as $nr => $subResult )
         {
