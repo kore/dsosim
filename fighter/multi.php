@@ -36,7 +36,7 @@ class MultiFight extends Fight
             $localAttacker = clone $attacker;
             $localDefender = clone $defender;
 
-            $localAttacker->attack( $localDefender );
+            $localAttacker->attack( $localDefender, $this->inTower );
             $results[] = array(
                 'attacker' => $localAttacker,
                 'defender' => $localDefender,

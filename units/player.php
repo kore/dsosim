@@ -102,6 +102,7 @@ class Kanonier extends Unit
         $this->bonusHitPoints = 60;
         $this->hitProbability = .9;
         $this->tower          = true;
+        $this->ignoreTower    = true;
     }
 }
 
