@@ -72,7 +72,8 @@ Fight options:
 
 -t / --tower        Enemy units are using a tower to defend themselves
 
-The fight specification should look like "20R10B".
+The fight specification should look like "20R10B". For a list of available 
+abbreviations use the --list option.
 
 EOHELP;
     exit( 0 );
