@@ -50,7 +50,7 @@ class Army
      * @param Army $army 
      * @return void
      */
-    public function attack( Army $army )
+    public function attack( Army $army, $inTower = false )
     {
         while ( $this->isAlive() && $army->isAlive() )
         {
@@ -58,8 +58,9 @@ class Army
 
             foreach ( $this->units as $priority => $sets )
             {
-                $this->groupAttack( $army, $priority );
-                $army->groupAttack( $this, $priority );
+                $this->groupAttack( $army, $priority, $inTower );
+                // Only the defender gets the benefit of the tower
+                $army->groupAttack( $this, $priority, false );
 
                 $this->commit();
                 $army->commit();
@@ -74,11 +75,11 @@ class Army
      * @param int $priority 
      * @return void
      */
-    protected function groupAttack( Army $army, $priority )
+    protected function groupAttack( Army $army, $priority, $inTower = false )
     {
         foreach ( $this->units[$priority] as $set )
         {
-            $set->attack( $army );
+            $set->attack( $army, $inTower );
         }
     }
 

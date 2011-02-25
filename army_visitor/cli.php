@@ -6,8 +6,14 @@ class ArmyCliVisitor extends ArmyVisitor
     {
         echo "Evaluated {$result->tries} different armies\n\n";
 
+        $max = 10;
         foreach ( $result->fights as $fight )
         {
+            if ( --$max < 0 )
+            {
+                break;
+            }
+
             $this->visit( $fight );
         }
     }
@@ -17,7 +23,13 @@ class ArmyCliVisitor extends ArmyVisitor
         echo
             ( $result->attacker->isAlive() ? 'Won fight' : 'Lost fight' ),
             ' with ',
-            $result->attacker->getLosses() . " units lost:\n\n";
+            $result->attacker->getLosses() . " units lost:";
+
+        if ( $result->evaluations > 1 )
+        {
+            echo " (average of {$result->evaluations} evaluations)";
+        }
+        echo "\n\n";
 
         $this->visit( $result->attacker );
         printf( "  versus (%.1f rounds (%d - %d))\n\n",

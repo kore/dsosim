@@ -45,6 +45,13 @@ abstract class Unit
     protected $tower = false;
 
     /**
+     * This unit ignores a defending tower in its attacks
+     * 
+     * @var bool
+     */
+    protected $ignoreTower = false;
+
+    /**
      * If the unit is a boss, which means that it may attack multiple units
      * 
      * @var bool

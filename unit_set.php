@@ -98,15 +98,15 @@ class UnitSet
      * @param Army $army 
      * @return void
      */
-    public function attack( Army $army )
+    public function attack( Army $army, $inTower = false )
     {
         if ( $this->type->isBoss )
         {
-            $this->bossAttack( $army );
+            $this->bossAttack( $army, $inTower );
         }
         else
         {
-            $this->commonAttack( $army );
+            $this->commonAttack( $army, $inTower );
         }
     }
 
@@ -117,7 +117,7 @@ class UnitSet
      * @param Army $army 
      * @return void
      */
-    protected function bossAttack( Army $army )
+    protected function bossAttack( Army $army, $inTower )
     {
         $attackPoints  = $this->type->getHitPoints();
         do {
@@ -139,7 +139,7 @@ class UnitSet
      * @param Army $army 
      * @return void
      */
-    protected function commonAttack( Army $army )
+    protected function commonAttack( Army $army, $inTower )
     {
         $unit          = 0;
         $currentTarget = null;
@@ -156,7 +156,9 @@ class UnitSet
             }
 
             $currentTarget->currentHealth -= min(
-                $this->type->getHitPoints(),
+                $this->type->getHitPoints() /
+                    ( $inTower && $currentTarget->type->tower && !$this->type->ignoreTower
+                        ? 2 : 1 ),
                 $currentTarget->currentHealth % $currentTarget->type->health ?: $currentTarget->type->health
             );
 

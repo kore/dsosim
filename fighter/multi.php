@@ -15,8 +15,9 @@ class MultiFight extends Fight
      * @param int $iterations 
      * @return void
      */
-    public function __construct( $iterations = 10 )
+    public function __construct( $inTower = false, $iterations = 10 )
     {
+        parent::__construct( $inTower );
         $this->iterations = $iterations;
     }
 
@@ -35,7 +36,7 @@ class MultiFight extends Fight
             $localAttacker = clone $attacker;
             $localDefender = clone $defender;
 
-            $localAttacker->attack( $localDefender );
+            $localAttacker->attack( $localDefender, $this->inTower );
             $results[] = array(
                 'attacker' => $localAttacker,
                 'defender' => $localDefender,
@@ -90,6 +91,7 @@ class MultiFight extends Fight
     {
         $result = new Result();
         $count  = count( $results );
+        $result->evaluations = $count;
 
         foreach ( $results as $nr => $subResult )
         {

@@ -20,9 +20,10 @@ class FightOptimizer extends Fight
      * @param Fight $fighter 
      * @return void
      */
-    public function __construct( Fight $fighter = null )
+    public function __construct( $inTower = false, $fighter = null )
     {
-        $this->fighter = ( $fighter === null ) ? new MultiFight( 1 ) : $fighter;
+        parent::__construct( $inTower );
+        $this->fighter = ( $fighter === null ) ? new MultiFight( $inTower, 1 ) : $fighter;
     }
 
     /**

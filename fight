@@ -10,6 +10,7 @@ $defaults = array(
     'colors'     => true,
     'optimize'   => null,
     'list'       => null,
+    'tower'      => null,
 );
 
 $mapping = array(
@@ -18,16 +19,18 @@ $mapping = array(
     'c' => 'colors',
     'o' => 'optimize',
     'l' => 'list',
+    't' => 'tower',
 );
 
 $options = getopt(
-    'hi:col',
+    'hi:colt',
     array(
         'help',
         'iterations:',
         'colors',
         'optimize',
         'list',
+        'tower',
     )
 );
 
@@ -53,7 +56,7 @@ by Kore Nordmann
 
 Usage: {$argv[0]} [options] <army> <army>
 
-Options:
+General options:
 
 -h / --help         Display this help output
 
@@ -65,7 +68,12 @@ Options:
 
 -l / --list         List all unit abbreviations
 
-The fight specification should look like "20R10B".
+Fight options:
+
+-t / --tower        Enemy units are using a tower to defend themselves
+
+The fight specification should look like "20R10B". For a list of available 
+abbreviations use the --list option.
 
 EOHELP;
     exit( 0 );
@@ -94,12 +102,19 @@ $attacker = $armyFactory->factory( array_pop( $argv ) );
 if ( $options['optimize'] !== null )
 {
     $fighter = new FightOptimizer(
-        new MultiFight( $options['iterations'] )
+        $options['tower'] !== null,
+        new MultiFight(
+            $options['tower'] !== null,
+            $options['iterations']
+        )
     );
 }
 else
 {
-    $fighter = new MultiFight( $options['iterations'] );
+    $fighter = new MultiFight(
+        $options['tower'] !== null,
+        $options['iterations']
+    );
 }
 
 $visitor = new ArmyCliVisitor();
