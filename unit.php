@@ -59,6 +59,14 @@ abstract class Unit
     protected $isBoss = false;
 
     /**
+     * If the unit is a general, which means it is always the last unit 
+     * attacked by opponents
+     * 
+     * @var bool
+     */
+    protected $isGeneral = false;
+
+    /**
      * Common attack order for units
      * 
      * @var array

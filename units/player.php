@@ -115,6 +115,7 @@ class General extends Unit
         $this->bonusHitPoints = 0;
         $this->hitProbability = 1;
         $this->isBoss         = true;
+        $this->isGeneral      = true;
     }
 }
 

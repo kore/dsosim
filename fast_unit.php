@@ -26,7 +26,14 @@ abstract class FastUnit extends Unit
             }
         );
 
-        return reset( $orderedSets );
+        $nextUnit = array_shift( $orderedSets );
+        if ( count( $orderedSets ) &&
+             $nextUnit->type->isGeneral )
+        {
+            $nextUnit = array_shift( $orderedSets );
+        }
+
+        return $nextUnit;
     }
 }
 
