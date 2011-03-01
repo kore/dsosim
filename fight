@@ -97,7 +97,7 @@ if ( $options['list'] !== null )
 }
 
 $defender = $armyFactory->factory( array_pop( $argv ) );
-$attacker = $armyFactory->factory( array_pop( $argv ) );
+$attacker = $armyFactory->factory( array_pop( $argv ), true );
 
 if ( $options['optimize'] !== null )
 {

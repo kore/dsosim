@@ -53,8 +53,13 @@ class ArmyFactory
      * @param string $specification 
      * @return Army
      */
-    public function factory( $specification )
+    public function factory( $specification, $attacker = false )
     {
+        if ( $attacker && !preg_match( '(\\d+G)i', $specification ) )
+        {
+            $specification = '1G' . $specification;
+        }
+
         preg_match_all( '((?P<count>\\d+)(?P<type>[A-Z]+))', strtoupper( $specification ), $matches, PREG_SET_ORDER );
 
         $army = new Army();
