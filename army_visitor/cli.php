@@ -71,12 +71,8 @@ class ArmyCliVisitor extends ArmyVisitor
      */
     protected function printFloat( $float )
     {
-        $positive = $float >= 0;
-        $log = $float == 0 ? 1 : max( 1, ceil( log10( abs( $float ) ) ) );
-        return sprintf( '%s%3.2f',
-            str_repeat( ' ', 3 - $log + $positive ),
-            $float
-        );
+        $number = sprintf( '%3.2f', $float );
+        return str_pad( $number, 6, ' ', STR_PAD_LEFT );
     }
 
 }
