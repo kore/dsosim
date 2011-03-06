@@ -2,6 +2,21 @@
 
 class ArmyCliVisitor extends ArmyVisitor
 {
+    
+    protected $escapeSequence   = "\033[%sm";
+    protected $stylesAlive      = "1";
+    protected $stylesDead       = "31";
+    
+    public function __construct( $useCliColors )
+    {
+        if ( !$useCliColors )
+        {
+            $this->escapeSequence   = '%s';
+            $this->stylesAlive      = '';
+            $this->stylesDead       = '';
+        }
+    }
+    
     public function visitOptimizeResult( OptimizeResult $result )
     {
         echo "Evaluated {$result->tries} different armies\n\n";
@@ -52,13 +67,15 @@ class ArmyCliVisitor extends ArmyVisitor
 
     public function visitUnitResult( UnitResult $result )
     {
-        printf( "   - %s%s: %s of % 3d (% 3d - % 3d) (%s)\n",
+        printf( "   - " . $this->escapeSequence . "%s%s: %s" . $this->escapeSequence . " (% 3d - % 3d) of % 3d (%s)\n",
+            ( $result->count > 0 ) ? $this->stylesAlive : $this->stylesDead,
             $result->name,
             str_repeat( ' ', 20 - iconv_strlen( $result->name, 'UTF-8' ) ),
             $this->printFloat( $result->count ),
-            $result->initialCount,
+            '',
             $result->minCount,
             $result->maxCount,
+            $result->initialCount,
             $this->printFloat( -( $result->initialCount - $result->count ) )
         );
     }
