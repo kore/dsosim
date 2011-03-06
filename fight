@@ -117,7 +117,7 @@ else
     );
 }
 
-$visitor = new ArmyCliVisitor();
+$visitor = new ArmyCliVisitor( $options['colors'] !== null );
 $visitor->visit(
     $fighter->fight( $attacker, $defender )
 );
