@@ -45,6 +45,25 @@ class Army
     }
 
     /**
+     * Remove empty unit sets
+     * 
+     * @return void
+     */
+    public function removeEmptySets()
+    {
+        foreach ( $this->units as $priority => $sets )
+        {
+            foreach ( $sets as $nr => $set )
+            {
+                if ( $set->count <= 0 )
+                {
+                    unset( $this->units[$priority][$nr] );
+                }
+            }
+        }
+    }
+
+    /**
      * Attack another army
      * 
      * @param Army $army 

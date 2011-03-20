@@ -55,6 +55,7 @@ class FightOptimizer extends Fight
         {
             // Readd general to army
             $attacker->addUnitSet( new UnitSet( new General(), 1 ) );
+            $attacker->removeEmptySets();
             if ( ( $result = $this->filterFight( $attacker, clone $defender ) ) !== null )
             {
                 $results->fights[] = $result;
