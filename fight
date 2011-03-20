@@ -101,13 +101,15 @@ $attacker = $armyFactory->factory( array_pop( $argv ), true );
 
 if ( $options['optimize'] !== null )
 {
-    $fighter = new FightOptimizer(
+    $fighter = new ObservedFightOptimizer(
         $options['tower'] !== null,
         new MultiFight(
             $options['tower'] !== null,
             $options['iterations']
         )
     );
+
+    $fighter->registerObserver( new CliFightObserver() );
 }
 else
 {

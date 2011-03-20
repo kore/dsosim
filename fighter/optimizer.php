@@ -4,8 +4,10 @@ class FightOptimizer extends Fight
 {
     /**
      * Maximum army size
+     *
+     * 200 + 1 General
      */
-    const MAX_SIZE = 200;
+    const MAX_SIZE = 201;
 
     /**
      * Aggregated fighter to run the actual fights
@@ -42,16 +44,11 @@ class FightOptimizer extends Fight
 
         foreach ( $armies as $attacker )
         {
-            $results->fights[] = $this->fighter->fight( $attacker, clone $defender );
-        };
-
-        $results->fights = array_filter(
-            $results->fights,
-            function ( $value )
+            if ( ( $result = $this->filterFight( $attacker, clone $defender ) ) !== null )
             {
-                return $value->attacker->isAlive();
+                $results->fights[] = $result;
             }
-        );
+        };
 
         usort(
             $results->fights,
@@ -61,6 +58,20 @@ class FightOptimizer extends Fight
             }
         );
         return $results;
+    }
+
+    /**
+     * Execute a single fight and only return it, if it was successful
+     * 
+     * @param Army $attacker 
+     * @param Army $defender 
+     * @return mixed
+     */
+    public function filterFight( Army $attacker, Army $defender )
+    {
+        $result = $this->fighter->fight( $attacker, clone $defender );
+
+        return $result->attacker->isAlive() ? $result : null;
     }
 
     /**
