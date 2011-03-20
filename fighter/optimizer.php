@@ -45,6 +45,7 @@ class FightOptimizer extends Fight
                 $unitSet->setUnitCount( 0 );
             }
         }
+        $attacker->removeEmptySets();
 
         // Generate variations
         $armies         = $this->getVariations( $attacker );
