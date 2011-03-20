@@ -150,7 +150,7 @@ class UnitSet
                 $currentTarget = $this->type->determineNextTarget( $army );
             }
 
-            if ( $currentTarget === false )
+            if ( !$currentTarget )
             {
                 return;
             }
