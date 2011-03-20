@@ -5,7 +5,7 @@ class OptimizeResult
     /**
      * @var array
      */
-    public $fights;
+    public $fights = array();
 
     /**
      * @var int
