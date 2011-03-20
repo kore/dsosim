@@ -4,7 +4,7 @@ class CliFightObserver extends FightObserver
 {
     protected $armyCount;
 
-    protected $fightsDone;
+    protected $processed;
 
     protected $fightsWon;
 
@@ -21,10 +21,10 @@ class CliFightObserver extends FightObserver
     public function filterFightStart( Army $attacker, Army $defender )
     {
         printf( "\rFight %d / %d (%.2f%%) (%.2f%% fights won)       ",
-            ++$this->fightsDone,
+            ++$this->processed,
             $this->armyCount,
-            $this->fightsDone / $this->armyCount * 100,
-            $this->fightsWon / $this->fightsDone * 100
+            $this->processed / $this->armyCount * 100,
+            $this->fightsWon / $this->processed * 100
         );
     }
 
@@ -50,27 +50,32 @@ class CliFightObserver extends FightObserver
     public function eliminateUnitSetsEnd( array $armies )
     {
         echo count( $armies ) . " armies created.\n";
-        echo "- Limit army to max count: ";
+        $this->armyCount = count( $armies );
     }
 
     public function capUnitsSetsStart( Army $army )
     {
+        printf( "\r- Capping army size %d / %d (%.2f%%)       ",
+            ++$this->processed,
+            $this->armyCount,
+            $this->processed / $this->armyCount * 100
+        );
     }
 
     public function capUnitsSetsEnd( array $armies )
     {
-        echo ".";
     }
 
     public function removeDuplicatesStart( array $armies )
     {
+        $this->armyCount = count( $armies );
         echo "\n- Removing duplicate armies: ";
     }
 
     public function removeDuplicatesEnd( array $armies )
     {
+        echo count( $armies ), " of ", $this->armyCount, " armies left.\n\n";
         $this->armyCount = count( $armies );
-        echo count( $armies ) . " armies left.\n\n";
     }
 
     /**
