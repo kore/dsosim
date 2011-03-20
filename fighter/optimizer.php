@@ -4,10 +4,8 @@ class FightOptimizer extends Fight
 {
     /**
      * Maximum army size
-     *
-     * 200 + 1 General
      */
-    const MAX_SIZE = 201;
+    const MAX_SIZE = 200;
 
     /**
      * Aggregated fighter to run the actual fights
@@ -38,12 +36,25 @@ class FightOptimizer extends Fight
      */
     public function fight( Army $attacker, Army $defender )
     {
+        // Remove general during variation generation, as he should always be 
+        // part of the army anyways.
+        foreach ( $attacker->getUnits() as $unitSet )
+        {
+            if ( $unitSet->type instanceof General )
+            {
+                $unitSet->setUnitCount( 0 );
+            }
+        }
+
+        // Generate variations
         $armies         = $this->getVariations( $attacker );
         $results        = new OptimizeResult();
         $results->tries = count( $armies );
 
         foreach ( $armies as $attacker )
         {
+            // Readd general to army
+            $attacker->addUnitSet( new UnitSet( new General(), 1 ) );
             if ( ( $result = $this->filterFight( $attacker, clone $defender ) ) !== null )
             {
                 $results->fights[] = $result;
