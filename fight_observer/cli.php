@@ -76,6 +76,7 @@ class CliFightObserver extends FightObserver
     {
         echo count( $armies ), " of ", $this->armyCount, " armies left.\n\n";
         $this->armyCount = count( $armies );
+        $this->processed = 0;
     }
 
     /**
