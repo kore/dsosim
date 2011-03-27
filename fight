@@ -11,6 +11,7 @@ $defaults = array(
     'optimize'   => null,
     'list'       => null,
     'tower'      => null,
+    'values'     => null,
 );
 
 $mapping = array(
@@ -20,10 +21,11 @@ $mapping = array(
     'o' => 'optimize',
     'l' => 'list',
     't' => 'tower',
+    'v' => 'values',
 );
 
 $options = getopt(
-    'hi:colt',
+    'hi:coltv:',
     array(
         'help',
         'iterations:',
@@ -31,6 +33,7 @@ $options = getopt(
         'optimize',
         'list',
         'tower',
+        'values:',
     )
 );
 
@@ -66,6 +69,9 @@ General options:
 
 -o / --optimize     Use army set optimization
 
+-v / --values       Use the unit value specifications from the given file to 
+                    weigh lossen during optimization
+
 -l / --list         List all unit abbreviations
 
 Fight options:
@@ -79,7 +85,7 @@ EOHELP;
     exit( 0 );
 }
 
-$armyFactory = new ArmyFactory();
+$armyFactory = new ArmyFactory( $options['values'] );
 
 // Show list of abbreviations, if requested
 if ( $options['list'] !== null )
