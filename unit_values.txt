@@ -1,0 +1,10 @@
+Rekrut              1
+Miliz               2
+Reiterei            1.3
+Soldat              4
+Elitesoldat         8
+Bogenschütze        1
+Langbogenschütze    2
+Armbrustschütze     4
+Kanonier            8
+General             1
