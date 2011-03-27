@@ -143,7 +143,15 @@ abstract class Unit
      */
     public function __set( $property, $value )
     {
-        throw new RuntimeException( "No such property: $property." );
+        switch ( $property )
+        {
+            case 'value':
+                return $this->value = (float) $value;
+
+            default:
+                throw new RuntimeException( "No such property: $property." );
+        }
+
     }
 
     /**
