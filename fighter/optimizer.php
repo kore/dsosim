@@ -67,7 +67,7 @@ class FightOptimizer extends Fight
             $results->fights,
             function ( Result $a, Result $b )
             {
-                return (int) ( ( $a->attacker->getLosses() - $b->attacker->getLosses() ) * 100 );
+                return (int) ( ( $a->attacker->getLosses() - $b->attacker->getWeightedLosses() ) * 100 );
             }
         );
         return $results;

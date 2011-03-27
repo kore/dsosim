@@ -17,6 +17,17 @@ class ArmyResult
         $losses = 0;
         foreach ( $this->units as $unit )
         {
+            $losses += $unit->initialCount - $unit->count;
+        }
+
+        return $losses;
+    }
+
+    public function getWeightedLosses()
+    {
+        $losses = 0;
+        foreach ( $this->units as $unit )
+        {
             $losses += ( $unit->initialCount - $unit->count ) * $unit->value;
         }
 
