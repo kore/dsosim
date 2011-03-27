@@ -38,6 +38,14 @@ abstract class Unit
     protected $hitProbability;
 
     /**
+     * Relative unit value. Maybe any number. used during optimization to 
+     * compare unit losses to other unit losses
+     * 
+     * @var float
+     */
+    protected $value = 1;
+
+    /**
      * May be put into a tower
      * 
      * @var bool

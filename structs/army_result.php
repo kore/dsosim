@@ -17,7 +17,7 @@ class ArmyResult
         $losses = 0;
         foreach ( $this->units as $unit )
         {
-            $losses += $unit->initialCount - $unit->count;
+            $losses += ( $unit->initialCount - $unit->count ) * $unit->value;
         }
 
         return $losses;

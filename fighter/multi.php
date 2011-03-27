@@ -66,12 +66,14 @@ class MultiFight extends Fight
                 foreach ( $army->getUnits() as $set )
                 {
                     $array[$nr][$name][get_class( $set->type )] = array(
+                        'value'   => $set->type->value,
                         'count'   => $set->count,
                         'initial' => $set->initialCount,
                     );
                 }
 
                 $array[$nr][$name]['rounds'] = array(
+                    'value'   => 1,
                     'count'   => $army->getRounds(),
                     'initial' => 1,
                 );
@@ -102,7 +104,7 @@ class MultiFight extends Fight
                     if ( !isset( $result->$name ) ||
                          !isset( $result->$name->units[$unit] ) )
                     {
-                        $result->$name->units[$unit] = new UnitResult( $unit, 0, $counts['initial'] );
+                        $result->$name->units[$unit] = new UnitResult( $unit, 0, $counts['initial'], $counts['value'] );
                     }
 
                     $result->$name->units[$unit]->count   += $counts['count'] / $count;

@@ -18,6 +18,11 @@ class UnitResult
     public $initialCount;
 
     /**
+     * @var float
+     */
+    public $value;
+
+    /**
      * @var int
      */
     public $maxCount;
@@ -27,11 +32,12 @@ class UnitResult
      */
     public $minCount;
 
-    public function __construct( $name, $count, $initialCount, $minCount = PHP_INT_MAX, $maxCount = 0 )
+    public function __construct( $name, $count, $initialCount, $value = 1, $minCount = PHP_INT_MAX, $maxCount = 0 )
     {
         $this->name         = $name;
         $this->count        = $count;
         $this->initialCount = $initialCount;
+        $this->value        = $value;
         $this->minCount     = $minCount;
         $this->maxCount     = $maxCount;
     }
