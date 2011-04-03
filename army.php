@@ -98,7 +98,10 @@ class Army
     {
         foreach ( $this->units[$priority] as $set )
         {
-            $set->attack( $army, $inTower );
+            if ( $set->count )
+            {
+                $set->attack( $army, $inTower );
+            }
         }
     }
 
