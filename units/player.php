@@ -114,7 +114,9 @@ class General extends Unit
         $this->minHitPoints   = 120;
         $this->bonusHitPoints = 0;
         $this->hitProbability = 1;
-        $this->isBoss         = true;
+
+        // The boss fighting rules do NOT apply to a general
+        $this->isBoss         = false;
         $this->isGeneral      = true;
     }
 }
