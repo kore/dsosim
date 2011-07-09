@@ -52,9 +52,9 @@ class DickeBertha extends Unit
     {
         $this->health         = 40000;
         $this->priority       = Unit::LOW;
-        $this->minHitPoints   = 5;
-        $this->bonusHitPoints = 5;
-        $this->hitProbability = .6;
+        $this->minHitPoints   = 50;
+        $this->bonusHitPoints = 100;
+        $this->hitProbability = .75;
         $this->tower          = true;
         $this->ignoreTower    = true;
     }
@@ -67,7 +67,7 @@ class SirRobin extends Unit
         $this->health         = 12000;
         $this->priority       = Unit::HIGH;
         $this->minHitPoints   = 200;
-        $this->bonusHitPoints = 600;
+        $this->bonusHitPoints = 400;
         $this->hitProbability = .8;
         $this->isBoss         = true;
     }
