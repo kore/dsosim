@@ -32,6 +32,14 @@ class ArmyFactory
         'CK'  => 'Chuck',
         'MG'  => 'Metallgebiss',
         'DWW' => 'DieWildeWaltraud',
+       
+        // Traitors
+        'DM'  => 'DesertierteMiliz',
+        'DC'  => 'DesertierteReiterei',
+        'DS'  => 'DesertierterSoldat',
+        'DLB' => 'DesertierterLangbogenschütze',
+        'DB'  => 'DickeBertha',
+        'SR'  => 'SirRobin',
     );
 
     /**
