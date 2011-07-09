@@ -70,7 +70,7 @@ class ArmyCliVisitor extends ArmyVisitor
         printf( "   - " . $this->escapeSequence . "%s%s: %s" . $this->escapeSequence . " (% 3d - % 3d) of % 3d (%s)\n",
             ( $result->count > 0 ) ? $this->stylesAlive : $this->stylesDead,
             $result->name,
-            str_repeat( ' ', 20 - iconv_strlen( $result->name, 'UTF-8' ) ),
+            str_repeat( ' ', 30 - iconv_strlen( $result->name, 'UTF-8' ) ),
             $this->printFloat( $result->count ),
             '',
             $result->minCount,
