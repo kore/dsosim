@@ -83,7 +83,6 @@ abstract class Unit
         'Chuck'                        => 0,
         'Metallgebiss'                 => 0,
         'DieWildeWaltraud'             => 0,
-        'DickeBertha'                  => 0,
         'SirRobin'                     => 0,
         'Rekrut'                       => 1,
         'Plünderer'                    => 1,
@@ -107,6 +106,7 @@ abstract class Unit
         'General'                      => 10,
         'EinäugigerBert'               => 10,
         'Stinktier'                    => 10,
+        'DickeBertha'                  => 10,
     );
 
     /**
