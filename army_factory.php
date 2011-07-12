@@ -40,6 +40,14 @@ class ArmyFactory
         'DLB' => 'DesertierterLangbogenschütze',
         'DB'  => 'DickeBertha',
         'SR'  => 'SirRobin',
+       
+        // Horsemen
+        'NO'  => 'Nomade',
+        'LR'  => 'Lanzenreiter',
+        'BA'  => 'BeritteneAmazone',
+        'BB'  => 'BerittenerBogenschütze',
+        'KP'  => 'Kataphrakt',
+        'BS'  => 'BrüllenderStier',
     );
 
     /**
